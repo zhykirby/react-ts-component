@@ -1,26 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router } from "react-router-dom";
+// import { hot } from 'react-hot-loader';
+import { renderRoutes } from 'react-router-config';
+// import renderRoutes from './utlis/renderRoutes';
+import routes from './router/routes';
+import { connect } from 'react-redux';
+import { IState } from './declare/store';
 
-const App: React.FC = () => {
+const mapStateToProps = (state:IState) => {
+  return {
+    authed: state.authed
+  }
+}
+
+// const authPath = '/login';
+
+
+const App: React.FC<any> = props => {
+  // const { authed } = props
+  // const RRoutes = {routes, authed, authPath}
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        
+        { renderRoutes(routes) }
+        {/**
+         * <Route path="/" exact component={Index} />
+        <Route path="/about/" component={About} />
+        <Route path="/users/" component={Users} />
+         */}
+      </div>
+    </Router>
   );
 }
 
-export default App;
+export default connect(mapStateToProps, null)(App);
